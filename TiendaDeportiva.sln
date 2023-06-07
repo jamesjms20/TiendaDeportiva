@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compartido", "Compartido", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compartido", "Compartido\Compartido.csproj", "{DF4D570A-4787-45A6-9FE3-23DA6D965947}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Categorias", "Categorias\Categorias.csproj", "{AEC2C11C-8CB7-4BF3-8F32-A04688BFEE69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{DF4D570A-4787-45A6-9FE3-23DA6D965947}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF4D570A-4787-45A6-9FE3-23DA6D965947}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF4D570A-4787-45A6-9FE3-23DA6D965947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEC2C11C-8CB7-4BF3-8F32-A04688BFEE69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEC2C11C-8CB7-4BF3-8F32-A04688BFEE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEC2C11C-8CB7-4BF3-8F32-A04688BFEE69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEC2C11C-8CB7-4BF3-8F32-A04688BFEE69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1} = {35851ABC-6C0C-482D-AF9C-796BB255F2A1}
 		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D} = {2AA2B8AE-86FF-483E-AFC5-42BD338DE8C0}
 		{DF4D570A-4787-45A6-9FE3-23DA6D965947} = {A42F5145-E0C8-42F1-ACCF-B0277F2507A7}
+		{AEC2C11C-8CB7-4BF3-8F32-A04688BFEE69} = {83FCE6D3-70FB-4429-9EAC-A918ADB5FE14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ADF5F033-EB7A-4F7B-91DA-15EACBEAFE21}

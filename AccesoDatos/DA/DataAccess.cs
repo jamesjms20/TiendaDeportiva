@@ -33,10 +33,7 @@ namespace AccesoDatos.DA
 
             public static DataAccess GetInstancia()
             {
-            if (Connection is null)
-            {
-                Connection = new DataAccess();
-            }
+            Connection ??= new DataAccess();
             return Connection;
             
             }

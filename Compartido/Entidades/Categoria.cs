@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace Compartido.Entidades
 {
-    public class Producto
+    public class Categoria
     {
-        public int Id { get; set; }
         public int CatId { get; set; }
-        public string Nombre { get; set; }
-        public decimal Precio { get; set; }
-        public string Descripcion { get; set; }
-
-
+        public string CatNombre { get; set; }
+        public string CatDescripcion { get; set;}
     }
+    
 }

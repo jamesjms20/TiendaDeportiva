@@ -85,7 +85,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                 while(sqlDataReader.Read()){
                     producto = new Producto {
                         Id = Convert.ToInt32(sqlDataReader["pId"]),
-                        catId = Convert.ToInt32(sqlDataReader["catId"]),
+                        CatId = Convert.ToInt32(sqlDataReader["catId"]),
                         Nombre = sqlDataReader["pNombre"].ToString(),
                         Precio = Convert.ToDecimal(sqlDataReader["pPrecio"]),
                         Descripcion = sqlDataReader["pDescripcion"].ToString()
@@ -117,7 +117,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();
-                sqlCommand.Parameters.Add("catId", SqlDbType.Int).Value = producto.catId;
+                sqlCommand.Parameters.Add("catId", SqlDbType.Int).Value = producto.CatId;
                 sqlCommand.Parameters.Add("pNombre", SqlDbType.VarChar).Value = producto.Nombre;
                 sqlCommand.Parameters.Add("pPrecio", SqlDbType.VarChar).Value = producto.Precio;
                 sqlCommand.Parameters.Add("pDescripcion", SqlDbType.VarChar).Value = producto.Descripcion;
@@ -159,7 +159,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                 sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();
                 sqlCommand.Parameters.Add("pId", SqlDbType.Int).Value = producto.Id;
-                sqlCommand.Parameters.Add("catId", SqlDbType.Int).Value = producto.catId;
+                sqlCommand.Parameters.Add("catId", SqlDbType.Int).Value = producto.CatId;
                 sqlCommand.Parameters.Add("pNombre", SqlDbType.VarChar).Value = producto.Nombre;
                 sqlCommand.Parameters.Add("pPrecio", SqlDbType.VarChar).Value = producto.Precio;
                 sqlCommand.Parameters.Add("pDescripcion", SqlDbType.VarChar).Value = producto.Descripcion;
@@ -211,7 +211,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                     producto = new Producto
                     {
                         Id = Convert.ToInt32(sqlDataReader["pId"]),
-                        catId = Convert.ToInt32(sqlDataReader["catId"]),
+                        CatId = Convert.ToInt32(sqlDataReader["catId"]),
                         Nombre = sqlDataReader["pNombre"].ToString(),
                         Precio = Convert.ToDecimal(sqlDataReader["pPrecio"]),
                         Descripcion = sqlDataReader["pDescripcion"].ToString(),
@@ -250,8 +250,8 @@ namespace AccesoDatos.Repositories.ProductRepository
                 {
                     producto = new Producto
                     {
-                        Id = Convert.ToInt32(sqlDataReader["Id"]),
-                        catId = Convert.ToInt32(sqlDataReader["catId"]),
+                        Id = Convert.ToInt32(sqlDataReader["pId"]),
+                        CatId = Convert.ToInt32(sqlDataReader["catId"]),
                         Nombre = sqlDataReader["pNombre"].ToString(),
                         Precio = Convert.ToDecimal(sqlDataReader["pPrecio"]),
                         Descripcion = sqlDataReader["pDescripcion"].ToString(),
@@ -266,7 +266,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                 sqlConnection.Dispose();
             }
             return Productos;
-            throw new NotImplementedException();
+            
         }
     }
 }
