@@ -44,6 +44,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                 sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();
                 sqlCommand.Parameters.Add("pId", SqlDbType.Int).Value = id;
+                sqlCommand.ExecuteNonQuery();
                 sqlTransaction.Commit();
                 result = true;
             }
@@ -84,7 +85,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                 while(sqlDataReader.Read()){
                     producto = new Producto {
                         Id = Convert.ToInt32(sqlDataReader["pId"]),
-                        Nombre = sqlDataReader["p_Nombre"].ToString(),
+                        Nombre = sqlDataReader["pNombre"].ToString(),
                         Precio = Convert.ToDecimal(sqlDataReader["pPrecio"]),
                         Descripcion = sqlDataReader["pDescripcion"].ToString()
                     };
@@ -119,6 +120,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                 sqlCommand.Parameters.Add("pNombre", SqlDbType.VarChar).Value = producto.Nombre;
                 sqlCommand.Parameters.Add("pPrecio", SqlDbType.VarChar).Value = producto.Precio;
                 sqlCommand.Parameters.Add("pDescripcion", SqlDbType.VarChar).Value = producto.Descripcion;
+                sqlCommand.ExecuteNonQuery();
                 sqlTransaction.Commit();
 
 
@@ -151,7 +153,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                 sqlConnection.Open();
                 sqlCommand = sqlConnection.CreateCommand();
                 sqlTransaction = sqlConnection.BeginTransaction();
-                sqlCommand.CommandText = "dbo.sp_SaveProduct";
+                sqlCommand.CommandText = "dbo.sp_UpdateProduct";
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();
@@ -159,6 +161,7 @@ namespace AccesoDatos.Repositories.ProductRepository
                 sqlCommand.Parameters.Add("pNombre", SqlDbType.VarChar).Value = producto.Nombre;
                 sqlCommand.Parameters.Add("pPrecio", SqlDbType.VarChar).Value = producto.Precio;
                 sqlCommand.Parameters.Add("pDescripcion", SqlDbType.VarChar).Value = producto.Descripcion;
+                sqlCommand.ExecuteNonQuery();
                 sqlTransaction.Commit();
 
 

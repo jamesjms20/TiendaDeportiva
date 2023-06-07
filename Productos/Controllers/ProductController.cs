@@ -36,7 +36,7 @@ namespace Productos.Controllers
             return Ok(product);
         }
 
-        [HttpPut("UpdateProduct/{id}")]
+        [HttpPut("UpdateProduct")]
         public IActionResult UpdateProduct(Producto producto)
         {
             Producto product =  _productService.Update( producto);
