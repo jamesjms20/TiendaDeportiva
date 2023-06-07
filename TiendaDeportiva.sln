@@ -1,0 +1,75 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productos", "Productos\Productos.csproj", "{59AB6DE1-CFD8-4E55-81EC-6BA9BE21B1DA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1} = {BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}
+		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D} = {DAA8A015-0660-41AB-BBF9-7EE701E17F7D}
+		{DF4D570A-4787-45A6-9FE3-23DA6D965947} = {DF4D570A-4787-45A6-9FE3-23DA6D965947}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaDeportiva", "TiendaDeportiva\TiendaDeportiva.csproj", "{1687B4E1-759C-482C-8241-A48871379064}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentacion", "Presentacion", "{0D0FB2B3-E181-48D7-8AF1-95E88B0E2CAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servicios", "Servicios", "{83FCE6D3-70FB-4429-9EAC-A918ADB5FE14}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccesoDatos", "AccesoDatos", "{35851ABC-6C0C-482D-AF9C-796BB255F2A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Negocio", "Negocio", "{2AA2B8AE-86FF-483E-AFC5-42BD338DE8C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoDatos", "AccesoDatos\AccesoDatos.csproj", "{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.csproj", "{DAA8A015-0660-41AB-BBF9-7EE701E17F7D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1} = {BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}
+		{DF4D570A-4787-45A6-9FE3-23DA6D965947} = {DF4D570A-4787-45A6-9FE3-23DA6D965947}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compartido", "Compartido", "{A42F5145-E0C8-42F1-ACCF-B0277F2507A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compartido", "Compartido\Compartido.csproj", "{DF4D570A-4787-45A6-9FE3-23DA6D965947}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59AB6DE1-CFD8-4E55-81EC-6BA9BE21B1DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59AB6DE1-CFD8-4E55-81EC-6BA9BE21B1DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59AB6DE1-CFD8-4E55-81EC-6BA9BE21B1DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59AB6DE1-CFD8-4E55-81EC-6BA9BE21B1DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1687B4E1-759C-482C-8241-A48871379064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1687B4E1-759C-482C-8241-A48871379064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1687B4E1-759C-482C-8241-A48871379064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1687B4E1-759C-482C-8241-A48871379064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF4D570A-4787-45A6-9FE3-23DA6D965947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4D570A-4787-45A6-9FE3-23DA6D965947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF4D570A-4787-45A6-9FE3-23DA6D965947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4D570A-4787-45A6-9FE3-23DA6D965947}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{59AB6DE1-CFD8-4E55-81EC-6BA9BE21B1DA} = {83FCE6D3-70FB-4429-9EAC-A918ADB5FE14}
+		{1687B4E1-759C-482C-8241-A48871379064} = {0D0FB2B3-E181-48D7-8AF1-95E88B0E2CAE}
+		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1} = {35851ABC-6C0C-482D-AF9C-796BB255F2A1}
+		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D} = {2AA2B8AE-86FF-483E-AFC5-42BD338DE8C0}
+		{DF4D570A-4787-45A6-9FE3-23DA6D965947} = {A42F5145-E0C8-42F1-ACCF-B0277F2507A7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ADF5F033-EB7A-4F7B-91DA-15EACBEAFE21}
+	EndGlobalSection
+EndGlobal
