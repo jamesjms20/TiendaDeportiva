@@ -11,6 +11,8 @@ namespace Negocio.Servicios.ProductService
     public interface IProductService
     {
         List<Producto> Productos();
+        List<Producto> GetproductosByCategoria(int catId);
+
         Producto GetById(int id);
         Producto Save(Producto producto);
         Producto Update(Producto producto);

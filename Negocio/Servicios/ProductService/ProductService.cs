@@ -33,6 +33,11 @@ namespace Negocio.Servicios.ProductService
             return _productRepository.Productos();
         }
 
+        public List<Producto> GetproductosByCategoria(int catId)
+        {
+            return _productRepository.GetproductosByCategoria(catId);
+        }
+
         public Producto Save(Producto producto)
         {
             return _productRepository.Save(producto);
