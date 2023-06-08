@@ -8,9 +8,9 @@ namespace Compartido.Entidades
 {
     public class Categoria
     {
-        public int CatId { get; set; }
-        public string CatNombre { get; set; }
-        public string CatDescripcion { get; set;}
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set;}
     }
     
 }

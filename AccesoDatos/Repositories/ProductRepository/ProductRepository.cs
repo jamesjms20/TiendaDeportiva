@@ -13,8 +13,6 @@ using System.Xml;
 namespace AccesoDatos.Repositories.ProductRepository
 {
     public class ProductRepository : IProductRepository
-
-
     {
         private readonly DataAccess _dataAccess;
 

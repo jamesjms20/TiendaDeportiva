@@ -10,7 +10,7 @@ namespace AccesoDatos.Repositories.CategoryRepository
     public interface ICategoryRepository
     {
         List<Categoria> Categorias();
-        Categoria GetById(int catId);
+        Categoria GetById(int id);
         Categoria Save(Categoria categoria);
         Categoria Update(Categoria categoria);
         bool Delete(int id);
