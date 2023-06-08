@@ -18,36 +18,37 @@ namespace Productos.Controllers
         [HttpGet("GetProducts/")]
         public  IActionResult GetProducts()
         {
-            IEnumerable<Producto> products = _productService.Productos();
-            return Ok(products);
+            return Ok(_productService.Productos());
         }
 
         [HttpGet("GetProduct/{id}")]
         public IActionResult GetProduct(int id)
         {
-            Producto product = _productService.GetById(id);
-            return Ok(product);
+            return Ok(_productService.GetById(id));
+        }
+
+        [HttpGet("GetProductByCategoria/{id}")]
+        public IActionResult GetProductByCategoriaId(int id)
+        {
+            return Ok(_productService.GetproductosByCategoria(id));
         }
 
         [HttpPost("SaveProduct")]
         public IActionResult SaveProduct(Producto producto)
         {
-            Producto product = _productService.Save(producto);
-            return Ok(product);
+            return Ok(_productService.Save(producto));
         }
 
         [HttpPut("UpdateProduct")]
         public IActionResult UpdateProduct(Producto producto)
         {
-            Producto product =  _productService.Update( producto);
-            return Ok(product);
+            return Ok(_productService.Update(producto));
         }
 
         [HttpDelete("DeleteProduct/{id}")]
         public IActionResult DeleteProduct(int id)
         {
-            bool product = _productService.Delete(id);
-            return Ok(product);
+            return Ok(_productService.Delete(id));
         }
 
       

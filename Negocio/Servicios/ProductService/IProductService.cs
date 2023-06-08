@@ -12,7 +12,6 @@ namespace Negocio.Servicios.ProductService
     {
         List<Producto> Productos();
         List<Producto> GetproductosByCategoria(int catId);
-
         Producto GetById(int id);
         Producto Save(Producto producto);
         Producto Update(Producto producto);
