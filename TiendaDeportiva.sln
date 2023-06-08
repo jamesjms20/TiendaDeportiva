@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productos", "Productos\Productos.csproj", "{59AB6DE1-CFD8-4E55-81EC-6BA9BE21B1DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Productos", "Productos\Productos.csproj", "{59AB6DE1-CFD8-4E55-81EC-6BA9BE21B1DA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1} = {BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}
 		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D} = {DAA8A015-0660-41AB-BBF9-7EE701E17F7D}
 		{DF4D570A-4787-45A6-9FE3-23DA6D965947} = {DF4D570A-4787-45A6-9FE3-23DA6D965947}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaDeportiva", "TiendaDeportiva\TiendaDeportiva.csproj", "{1687B4E1-759C-482C-8241-A48871379064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TiendaDeportiva", "TiendaDeportiva\TiendaDeportiva.csproj", "{1687B4E1-759C-482C-8241-A48871379064}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentacion", "Presentacion", "{0D0FB2B3-E181-48D7-8AF1-95E88B0E2CAE}"
 EndProject
@@ -20,9 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccesoDatos", "AccesoDatos"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Negocio", "Negocio", "{2AA2B8AE-86FF-483E-AFC5-42BD338DE8C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoDatos", "AccesoDatos\AccesoDatos.csproj", "{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccesoDatos", "AccesoDatos\AccesoDatos.csproj", "{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.csproj", "{DAA8A015-0660-41AB-BBF9-7EE701E17F7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Negocio", "Negocio\Negocio.csproj", "{DAA8A015-0660-41AB-BBF9-7EE701E17F7D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1} = {BCCF49EE-F048-40DB-B093-2CE4C7EBB1B1}
 		{DF4D570A-4787-45A6-9FE3-23DA6D965947} = {DF4D570A-4787-45A6-9FE3-23DA6D965947}
@@ -30,9 +30,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compartido", "Compartido", "{A42F5145-E0C8-42F1-ACCF-B0277F2507A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compartido", "Compartido\Compartido.csproj", "{DF4D570A-4787-45A6-9FE3-23DA6D965947}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compartido", "Compartido\Compartido.csproj", "{DF4D570A-4787-45A6-9FE3-23DA6D965947}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Categorias", "Categorias\Categorias.csproj", "{AEC2C11C-8CB7-4BF3-8F32-A04688BFEE69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Categorias", "Categorias\Categorias.csproj", "{AEC2C11C-8CB7-4BF3-8F32-A04688BFEE69}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D} = {DAA8A015-0660-41AB-BBF9-7EE701E17F7D}
+		{DF4D570A-4787-45A6-9FE3-23DA6D965947} = {DF4D570A-4787-45A6-9FE3-23DA6D965947}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

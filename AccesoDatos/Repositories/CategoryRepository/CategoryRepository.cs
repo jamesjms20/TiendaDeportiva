@@ -63,7 +63,7 @@ namespace AccesoDatos.Repositories.CategoryRepository
                     return result;
                 }
                 sqlTransaction = sqlConnection.BeginTransaction();
-                sqlCommand.CommandText = "dbo.sp_DeleteCategoria";
+                sqlCommand.CommandText = "dbo.sp_DeleteCategory";
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();
@@ -103,7 +103,7 @@ namespace AccesoDatos.Repositories.CategoryRepository
                 sqlCommand.CommandText = "dbo.sp_GetCategoryById";
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Clear();
-                sqlCommand.Parameters.Add("pId", SqlDbType.Int).Value = id;
+                sqlCommand.Parameters.Add("catId", SqlDbType.Int).Value = id;
                 sqlDataReader = sqlCommand.ExecuteReader();
 
 
@@ -184,9 +184,9 @@ namespace AccesoDatos.Repositories.CategoryRepository
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();
-                sqlCommand.Parameters.Add("pId", SqlDbType.Int).Value = categoria.Id;
-                sqlCommand.Parameters.Add("pNombre", SqlDbType.VarChar).Value = categoria.Nombre;
-                sqlCommand.Parameters.Add("pDescripcion", SqlDbType.VarChar).Value = categoria.Descripcion;
+                sqlCommand.Parameters.Add("catId", SqlDbType.Int).Value = categoria.Id;
+                sqlCommand.Parameters.Add("catNombre", SqlDbType.VarChar).Value = categoria.Nombre;
+                sqlCommand.Parameters.Add("catDescripcion", SqlDbType.VarChar).Value = categoria.Descripcion;
                 sqlCommand.ExecuteNonQuery();
                 sqlTransaction.Commit();
 
