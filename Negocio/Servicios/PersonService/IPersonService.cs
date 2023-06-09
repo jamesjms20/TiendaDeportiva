@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Negocio.Servicios.PersonService
 {
-    internal interface IPersonService
+    public interface IPersonService
     {
         List<Person> GetPersons();
         Person GetById(int id);
+
         Person GetByIdNumber(string idNumber);
         Person GetByCredentials(string email, string password);
         Person Save(Person person);
