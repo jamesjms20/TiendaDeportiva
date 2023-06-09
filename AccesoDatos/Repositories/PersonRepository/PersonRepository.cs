@@ -1,13 +1,7 @@
 ﻿using AccesoDatos.DA;
 using Compartido.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.Data.SqlClient;
 
 namespace AccesoDatos.Repositories.PersonRepository
 {
