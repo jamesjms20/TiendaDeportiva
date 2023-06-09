@@ -9,7 +9,7 @@ namespace Negocio.Servicios.OrderService
 {
     public interface IOrderService
     {
-        List<Order> Orders();
+        List<Order> GetOrders();
         List<Order> GetOrdersByperson(int perId);
         Order GetById(int id);
         Order Save(Order order);

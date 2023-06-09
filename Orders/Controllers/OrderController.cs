@@ -18,7 +18,7 @@ namespace Orders.Controllers
         [HttpGet("GetOrders/")]
         public IActionResult GetOrders()
         {
-            return Ok(_orderService.Orders());
+            return Ok(_orderService.GetOrders());
         }
 
         [HttpGet("Get/{id}")]

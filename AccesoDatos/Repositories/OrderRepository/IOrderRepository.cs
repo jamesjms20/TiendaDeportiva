@@ -9,7 +9,7 @@ namespace AccesoDatos.Repositories.OrderRepository
 {
     public interface IOrderRepository
     {
-        List<Order> Orders();
+        List<Order> GetOrders();
         List<Order> GetOrdersByperson(int perId);
         Order GetById(int id);
         Order Save(Order order);

@@ -46,9 +46,9 @@ namespace Negocio.Servicios.OrderService
             return _orderRepository.GetProducts(orId);
         }
 
-        public List<Order> Orders()
+        public List<Order> GetOrders()
         {
-            return _orderRepository.Orders();
+            return _orderRepository.GetOrders();
         }
 
         public Order Save(Order order)

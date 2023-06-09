@@ -93,7 +93,7 @@ namespace AccesoDatos.Repositories.OrderRepository
 
             finally
             {
-                sqlCommand.Dispose();
+                sqlCommand?.Dispose();
                 sqlConnection.Close();
                 sqlConnection.Dispose();
             }
@@ -140,7 +140,7 @@ namespace AccesoDatos.Repositories.OrderRepository
 
         }
 
-        public List<Order> Orders()
+        public List<Order> GetOrders()
         {
             List<Order> Orders = new List<Order>();
 
