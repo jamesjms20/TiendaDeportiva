@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AccesoDatos.Repositories.PersonRepository
+namespace Negocio.Servicios.PersonService
 {
-    public interface IPersonRepository
+    internal interface IPersonService
     {
         List<Person> GetPersons();
         Person GetById(int id);
@@ -16,6 +16,5 @@ namespace AccesoDatos.Repositories.PersonRepository
         Person Save(Person person);
         Person Update(Person person);
         bool Delete(int id);
-
     }
 }
