@@ -39,6 +39,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Categorias", "Categorias\Ca
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders", "Orders\Orders.csproj", "{62D10EA7-2606-4B7C-98AB-7A67624302FE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DAA8A015-0660-41AB-BBF9-7EE701E17F7D} = {DAA8A015-0660-41AB-BBF9-7EE701E17F7D}
+		{DF4D570A-4787-45A6-9FE3-23DA6D965947} = {DF4D570A-4787-45A6-9FE3-23DA6D965947}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
