@@ -14,6 +14,7 @@ builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddSingleton<DataAccess>();
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("newPolicy", app =>

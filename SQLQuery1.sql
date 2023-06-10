@@ -176,6 +176,12 @@ AS
   select * from Person
   where perId = @perId
 GO
+CREATE PROCEDURE sp_GetPersonByIdNumber
+  @perIdNumber Integer
+AS
+  select * from Person
+  where perIdNumber = @perIdNumber
+GO
 
 CREATE PROCEDURE sp_GetPersonByCredentials
   @perEmail VARCHAR(100),
@@ -186,7 +192,7 @@ CREATE PROCEDURE sp_GetPersonByCredentials
 GO
 
 
-CREATE PROCEDURE sp_UpdateCategory
+CREATE PROCEDURE sp_updatePerson
   @perId Integer,
   @perName VARCHAR(100),
   @perIdNumber VARCHAR(100),

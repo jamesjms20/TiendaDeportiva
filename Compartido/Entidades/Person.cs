@@ -1,7 +1,10 @@
 ﻿using Compartido.Entidades;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,9 +12,11 @@ namespace Compartido.Entidades
 {
     public enum PersonType
     {
-        Cliente,
-        Administrador
+        [EnumMember(Value = "Cliente")]
+        Cliente = 0,
 
+        [EnumMember(Value = "Administrador")]
+        Administrador = 1
     }
     public class Person
     {
@@ -20,6 +25,7 @@ namespace Compartido.Entidades
         public string IdNumber { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        [JsonProperty("Type")]
         public PersonType Type { get; set; }
 
     }

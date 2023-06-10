@@ -119,14 +119,23 @@ namespace AccesoDatos.Repositories.PersonRepository
 
                 while (sqlDataReader.Read())
                 {
-                    person = new Person
+                    string typeString = sqlDataReader["perType"].ToString();
+                    PersonType personType;
+                    if (Enum.TryParse(typeString, out personType))
                     {
-                        Id = Convert.ToInt32(sqlDataReader["perId"]),
-                        Name = sqlDataReader["perName"].ToString(),
-                        IdNumber = sqlDataReader["perIdNumber"].ToString(),
-                        Email = sqlDataReader["perEmail"].ToString(),
-                        Type = (PersonType)sqlDataReader["Type"]
-                    };
+                        person = new Person
+                        {
+                            Id = Convert.ToInt32(sqlDataReader["perId"]),
+                            Name = sqlDataReader["perName"].ToString(),
+                            IdNumber = sqlDataReader["perIdNumber"].ToString(),
+                            Email = sqlDataReader["perEmail"].ToString(),
+                            Type = personType
+                        };
+                    }
+                    else
+                    {
+                        // Valor de perType no válido
+                    }
                 }
 
             }
@@ -155,7 +164,7 @@ namespace AccesoDatos.Repositories.PersonRepository
                 sqlCommand.CommandText = "dbo.sp_GetPersonByIdNumber";
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Clear();
-                sqlCommand.Parameters.Add("perIdNumber", SqlDbType.Int).Value = idNumber;
+                sqlCommand.Parameters.Add("perIdNumber", SqlDbType.VarChar).Value = idNumber;
                 sqlDataReader = sqlCommand.ExecuteReader();
 
                 while (sqlDataReader.Read())
