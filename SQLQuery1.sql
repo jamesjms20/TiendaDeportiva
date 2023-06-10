@@ -14,7 +14,7 @@ CREATE TABLE Producto (
     pPrecio DECIMAL NOT NULL,
     catId INTEGER NOT NULL,
     pDescripcion VARCHAR(200),
-    FOREIGN KEY (catId) REFERENCES Categoria(catId)
+    FOREIGN KEY (catId) REFERENCES Categoria(catId)ON DELETE CASCADE
 );
 insert Categoria(catNombre,catDescripcion)values('mancuernas', 'mancuernas de hierro ');
 insert Producto(catId, pNombre,pPrecio,pDescripcion) values (1,'mancuerna',1000,'mancuerna de 2000 kilos');
@@ -22,11 +22,12 @@ insert Producto(catId, pNombre,pPrecio,pDescripcion) values (1,'mancuerna',1000,
 drop procedure sp_SaveProduct
 GO
 
-CREATE PROCEDURE sp_DeleteProduct @pId INTEGER
+CREATE PROCEDURE sp_DeleteCategory 
+@catId INTEGER
 AS
-Delete from Producto WHERE pid=@pId
+DELETE FROM Producto WHERE catId=@catId
+Delete from Categoria WHERE catId=@catId
 GO
-
 
 CREATE PROCEDURE sp_SaveProduct
   @catId INTEGER,
@@ -177,19 +178,22 @@ AS
   where perId = @perId
 GO
 CREATE PROCEDURE sp_GetPersonByIdNumber
-  @perIdNumber Integer
+  @perIdNumber VARCHAR(100)
 AS
   select * from Person
   where perIdNumber = @perIdNumber
 GO
 
+
 CREATE PROCEDURE sp_GetPersonByCredentials
   @perEmail VARCHAR(100),
   @perPassword VARCHAR(100)
-  AS
-  select * from Person
-  where perEmail = @perEmail
-GO
+AS
+BEGIN
+  SELECT *
+  FROM Person
+  WHERE perEmail = @perEmail AND perPassword = @perPassword;
+END
 
 
 CREATE PROCEDURE sp_updatePerson
@@ -212,5 +216,125 @@ orId INTEGER NOT NULL IDENTITY(1,1) PRIMARY KEY,
 orDate DateTime NOT NULL,
 orStatus VARCHAR(200),
 perId INTEGER NOT NULL,
-FOREIGN KEY (perId) REFERENCES Person(perId)
+FOREIGN KEY (perId) REFERENCES Person(perId) ON DELETE CASCADE
 );
+GO
+drop procedure sp_DeleteOrder
+drop procedure sp_GetOrderById
+drop procedure sp_GetOrderByperId
+drop procedure sp_GetOrders
+drop procedure sp_SaveOrder
+drop procedure sp_updateOrder
+go
+
+CREATE PROCEDURE sp_DeleteOrder 
+@orId INTEGER
+AS
+Delete from OrderProduct where orId=@orId;
+Delete from OrderTab WHERE orId=@orId;
+GO
+
+CREATE PROCEDURE sp_GetOrderById
+  @orId Integer
+AS
+  select * from OrderTab
+  where orId = @orId
+GO
+
+CREATE PROCEDURE sp_GetOrderByperId
+  @perId Integer
+AS
+  select * from OrderTab
+  where perId = @perId
+GO
+
+CREATE PROCEDURE sp_GetOrders
+AS
+  select * from OrderTab
+
+CREATE PROCEDURE sp_SaveOrder
+  @orDate DateTime ,
+  @orStatus VARCHAR(100),
+  @perId Integer
+  AS
+  INSERT INTO OrderTab(orDate,orStatus,perId)
+    VALUES(@orDate,@orStatus,@perId)
+
+CREATE PROCEDURE sp_updateOrder
+  @orId Integer,
+  @orDate DateTime ,
+  @orStatus VARCHAR(100),
+  @perId Integer
+  AS
+  UPDATE OrderTab set orDate=@orDate,orStatus=@orStatus,perId=@perId
+  WHERE orId = @orId
+  GO
+---------------
+
+
+CREATE TABLE OrderProduct (
+    orProId INTEGER NOT NULL IDENTITY (1,1) PRIMARY KEY,
+    orId INTEGER NOT NULL,
+    pId INTEGER NOT NULL
+    FOREIGN KEY (orId) REFERENCES OrderTab(orId)ON DELETE CASCADE,
+    FOREIGN KEY (pId) REFERENCES Producto(pId)ON DELETE CASCADE
+);
+GO
+
+CREATE PROCEDURE sp_GetProductsByOrId
+@orId Integer
+As
+select * from OrderProduct inner join Producto on OrderProduct.pId = Producto.pId
+WHERE OrderProduct.orId = @orId;
+GO
+
+
+
+CREATE PROCEDURE sp_AddOrderProduct
+  @orId Integer ,
+  @pId Integer
+  AS
+  INSERT INTO OrderProduct (orId, pId)
+VALUES (@orId, @pId);
+GO
+
+CREATE PROCEDURE sp_DeleteOrderProduct
+  @orId Integer ,
+  @pId Integer
+  AS
+  Delete TOP(1) from OrderProduct WHERE orId = @orId AND pId =  @pId;
+  GO
+
+
+
+
+
+  INSERT INTO OrderTab(orDate,orStatus,perId)
+    VALUES(@orDate,@orStatus,@perId)
+GO
+
+
+  EXEC sp_GetProductsByOrId @orId = 1;
+
+  -- Ejemplo de inserción 1
+INSERT INTO OrderTab (orDate, orStatus, perId)
+VALUES ('2023-06-09', 'Pendiente', 7);
+
+-- Ejemplo de inserción 2
+INSERT INTO OrderTab (orDate, orStatus, perId)
+VALUES ('2023-06-10', 'En proceso', 2);
+
+-- Ejemplo de inserción 3
+INSERT INTO OrderTab (orDate, orStatus, perId)
+VALUES ('2023-06-11', 'Entregado', 2);
+
+INSERT INTO OrderProduct (orId, pId)
+VALUES (1, 3);
+
+-- Inserción 2
+INSERT INTO OrderProduct (orId, pId)
+VALUES (1, 4);
+
+-- Inserción 3
+INSERT INTO OrderProduct (orId, pId)
+VALUES (3, 3);

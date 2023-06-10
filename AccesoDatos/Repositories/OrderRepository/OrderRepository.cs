@@ -271,7 +271,7 @@ namespace AccesoDatos.Repositories.OrderRepository
             {
                 sqlConnection.Open();
                 sqlCommand = sqlConnection.CreateCommand();
-                sqlCommand.CommandText = "dbo.sp_GetProductByOrId";
+                sqlCommand.CommandText = "dbo.sp_GetProductsByOrId";
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Clear();
                 sqlCommand.Parameters.Add("orId", SqlDbType.Int).Value = orId;
@@ -315,7 +315,7 @@ namespace AccesoDatos.Repositories.OrderRepository
                     return result;
                 }
                 sqlTransaction = sqlConnection.BeginTransaction();
-                sqlCommand.CommandText = "dbo.sp_AddProductOrder";
+                sqlCommand.CommandText = "dbo.sp_AddOrderProduct";
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();
@@ -358,7 +358,7 @@ namespace AccesoDatos.Repositories.OrderRepository
                     return result;
                 }
                 sqlTransaction = sqlConnection.BeginTransaction();
-                sqlCommand.CommandText = "dbo.sp_DeleteProductOrder";
+                sqlCommand.CommandText = "dbo.sp_DeleteOrderProduct";
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();

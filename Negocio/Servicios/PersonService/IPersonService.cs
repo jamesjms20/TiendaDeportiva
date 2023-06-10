@@ -11,7 +11,6 @@ namespace Negocio.Servicios.PersonService
     {
         List<Person> GetPersons();
         Person GetById(int id);
-
         Person GetByIdNumber(string idNumber);
         Person GetByCredentials(string email, string password);
         Person Save(Person person);

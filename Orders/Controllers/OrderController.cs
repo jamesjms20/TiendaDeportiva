@@ -56,7 +56,7 @@ namespace Orders.Controllers
         {
             return Ok(_orderService.DeleteProduct(orId, pId));
         }
-        [HttpGet("GetProducts/{orID}")]
+        [HttpGet("GetProducts/")]
         public IActionResult GetProductsOrder(int orId)
         {
             return Ok(_orderService.GetProducts(orId));
