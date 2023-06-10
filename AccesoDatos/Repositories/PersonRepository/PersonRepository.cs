@@ -62,21 +62,31 @@ namespace AccesoDatos.Repositories.PersonRepository
                 sqlCommand.CommandText = "dbo.sp_GetPersonByCredentials";
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Clear();
-                sqlCommand.Parameters.Add("perEmail", SqlDbType.Int).Value = email;
-                sqlCommand.Parameters.Add("perPassword ", SqlDbType.Int).Value = password;
+                sqlCommand.Parameters.Add("perEmail",SqlDbType.VarChar).Value = email;
+                sqlCommand.Parameters.Add("perPassword ", SqlDbType.VarChar).Value = password;
                 sqlDataReader = sqlCommand.ExecuteReader();
+
 
                 while (sqlDataReader.Read())
                 {
-                    person = new Person
+                    string typeString = sqlDataReader["perType"].ToString();
+                    PersonType personType;
+                    if (Enum.TryParse(typeString, out personType))
                     {
-                        Id = Convert.ToInt32(sqlDataReader["perId"]),
-                        Name = sqlDataReader["perName"].ToString(),
-                        IdNumber = sqlDataReader["perIdNumber"].ToString(),
-                        Email = sqlDataReader["perEmail"].ToString(),
-                        Password = sqlDataReader["perPassword"].ToString(),
-                        Type = (PersonType)sqlDataReader["Type"]
-                    };
+                        person = new Person
+                        {
+                            Id = Convert.ToInt32(sqlDataReader["perId"]),
+                            Name = sqlDataReader["perName"].ToString(),
+                            IdNumber = sqlDataReader["perIdNumber"].ToString(),
+                            Email = sqlDataReader["perEmail"].ToString(),
+                            Password = sqlDataReader["perPassword"].ToString(),
+                            Type = personType
+                        };
+                    }
+                    else
+                    {
+                        // Valor de perType no válido
+                    }
                 }
 
             }
@@ -150,14 +160,22 @@ namespace AccesoDatos.Repositories.PersonRepository
 
                 while (sqlDataReader.Read())
                 {
-                    person = new Person
+                    string typeString = sqlDataReader["perType"].ToString();
+                    PersonType personType;
+                    if (Enum.TryParse(typeString, out personType))
                     {
-                        Id = Convert.ToInt32(sqlDataReader["perId"]),
-                        Name = sqlDataReader["perName"].ToString(),
-                        IdNumber = sqlDataReader["perIdNumber"].ToString(),
-                        Email = sqlDataReader["perEmail"].ToString(),
-                        Type = (PersonType)sqlDataReader["Type"]
-                    };
+                        person = new Person
+                        {
+                            Id = Convert.ToInt32(sqlDataReader["perId"]),
+                            Name = sqlDataReader["perName"].ToString(),
+                            IdNumber = sqlDataReader["perIdNumber"].ToString(),
+                            Email = sqlDataReader["perEmail"].ToString(),
+                            Type = personType
+                        };                    }
+                    else
+                    {
+                        // Valor de perType no válido
+                    }
                 }
 
             }
@@ -190,15 +208,26 @@ namespace AccesoDatos.Repositories.PersonRepository
                 sqlDataReader = sqlCommand.ExecuteReader();
                 while (sqlDataReader.Read())
                 {
-                    person = new Person
+                    string typeString = sqlDataReader["perType"].ToString();
+                    PersonType personType;
+                    if (Enum.TryParse(typeString, out personType))
                     {
-                        Id = Convert.ToInt32(sqlDataReader["perId"]),
-                        Name = sqlDataReader["perName"].ToString(),
-                        Email = sqlDataReader["perEmail"].ToString(),
-                        Type = (PersonType)sqlDataReader["Type"]
-                    };
-                    persons.Add(person);
+                        person = new Person
+                        {
+                            Id = Convert.ToInt32(sqlDataReader["perId"]),
+                            Name = sqlDataReader["perName"].ToString(),
+                            IdNumber = sqlDataReader["perIdNumber"].ToString(),
+                            Email = sqlDataReader["perEmail"].ToString(),
+                            Type = personType
+                        };
+                        persons.Add(person);
+                    }
+                    else
+                    {
+                        // Valor de perType no válido
+                    }
                 }
+
             }
             finally
             {
