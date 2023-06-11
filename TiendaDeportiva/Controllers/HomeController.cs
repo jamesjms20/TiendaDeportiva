@@ -1,22 +1,59 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using TiendaDeportiva.Models;
+using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace TiendaDeportiva.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly HttpClient _httpClient;
+        private readonly JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public HomeController(ILogger<HomeController> logger)
+        //public HomeController(IHttpClientFactory httpClientFactory)
+        //{
+        //    _httpClientFactory = httpClientFactory;
+        //}
+        private readonly IConfiguration _configuration;
+
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _logger = logger;
+            _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<ProductViewModel> products = new List<ProductViewModel>();
+            try
+            {
+                string productApiUrl = _configuration["ServicesUrl:Product"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(productApiUrl);
+
+                HttpResponseMessage response = await httpClient.GetAsync("api/product/GetProducts");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (content != null)
+                    {
+                        products = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(content, options);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+            return View(products);
         }
+
 
         public IActionResult Privacy()
         {

@@ -3,7 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient("ApiProduc", config =>
+builder.Services.AddHttpClient("ApiProduct", config =>
 {
     config.BaseAddress = new Uri(builder.Configuration["ServicesUrl:Product"]);
 });
@@ -12,6 +12,8 @@ builder.Services.AddHttpClient("ApiPerson", config =>
 {
     config.BaseAddress = new Uri(builder.Configuration["ServicesUrl:Order"]);
 });
+
+builder.Configuration.AddJsonFile("appsettings.json");
 
 var app = builder.Build();
 
