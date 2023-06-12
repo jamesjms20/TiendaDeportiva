@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using TiendaDeportiva.Models;
@@ -74,6 +75,53 @@ namespace TiendaDeportiva.Controllers
                 return null;
             }
             return category;
+        }
+
+    
+        [HttpPost]
+        public async Task<IActionResult> AddCategory(string nombre, string descripcion)
+        {
+            CategoryViewModel model = new CategoryViewModel();
+            try
+            {
+                model.Id = 0;
+                model.Nombre = nombre;
+                model.Descripcion=descripcion;
+
+                string categoryApiUrl = _configuration["ServicesUrl:Category"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(categoryApiUrl);
+
+                // Serializar el modelo de categoría a JSON
+                var jsonContent = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+
+                // Enviar la solicitud PUT al API para actualizar la categoría
+                HttpResponseMessage response = await httpClient.PostAsync($"api/Category/SaveCategory/", jsonContent);
+                if (response.IsSuccessStatusCode)
+                {
+                   
+                    return RedirectToAction("AdminCategory");
+                }
+                else if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    // La categoría no fue encontrada en el API
+                    return NotFound();
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ocurrió un error al actualizar la categoría.");
+                }
+            }
+            catch (Exception)
+            {
+                // Ocurrió una excepción durante la comunicación con el API
+                return NotFound();
+            }
+
+
+            return RedirectToAction("AdminCategory");
+
+
         }
 
         [HttpDelete]

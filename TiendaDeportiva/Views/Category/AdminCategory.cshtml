@@ -5,6 +5,17 @@
 }
 
 <div class="container">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <input type="text" id="nombre" class="form-control" placeholder="Nombre">
+        </div>
+        <div class="col-md-6">
+            <input type="text" id="descripcion" class="form-control" placeholder="Descripción">
+        </div>
+        <div class="col-md-2">
+            <button id="agregar" class="btn btn-primary">Agregar</button>
+        </div>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -60,7 +71,7 @@
             $.ajax({
                 url: '@Url.Action("Index", "Product")',
                 type: 'GET',
-                data: { categoryId: categoryId },
+                data: { id: categoryId },
                 success: function (response) {
                     $('main').html(response);
                 },
@@ -82,13 +93,37 @@
                 success: function (response) {
                     if (response) {
                         alert('Categoría eliminada correctamente.');
-                        location.reload(); // Recargar la página
+                        location.reload(); 
                     } else {
                         alert('Ocurrió un error al eliminar la categoría.');
                     }
                 },
                 error: function () {
                     alert('Ocurrió un error al eliminar la categoría.');
+                }
+            });
+        });
+
+        $('#agregar').click(function (e) {
+            e.preventDefault();
+
+            var nombre = $('#nombre').val();
+            var descripcion = $('#descripcion').val();
+
+            $.ajax({
+                url: '@Url.Action("AddCategory", "Category")',
+                type: 'POST',
+                data: { nombre: nombre, descripcion: descripcion },
+                success: function (response) {
+                    if (response) {
+                        alert('Categoría agregada correctamente.');
+                        location.reload(); 
+                    } else {
+                        alert('Ocurrió un error al agregar la categoría.');
+                    }
+                },
+                error: function () {
+                    alert('Ocurrió un error al agregar la categoría.');
                 }
             });
         });
