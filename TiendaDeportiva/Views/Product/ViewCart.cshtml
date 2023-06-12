@@ -1,0 +1,43 @@
+﻿
+   @model List<CartItem>
+
+<h2>Carrito de compras</h2>
+
+@if (Model.Count > 0 ||Model is null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Product.Nombre</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Product.Precio</td>
+                    <td>@(item.Quantity * item.Product.Precio)</td>
+                    <td>
+                        <a href="#">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <div>
+        <a href="#">Seguir comprando</a> |
+        <a href="#">Pagar</a>
+    </div>
+}
+else
+{
+    <p>No hay productos en el carrito.</p>
+}

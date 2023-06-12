@@ -1,22 +1,42 @@
-﻿
+﻿@using System.Text.Json
 @model IEnumerable<ProductViewModel>
-
 
 <div class="container">
     <h1>Bienvenido a TiendaDeportiva</h1>
     <div class="row">
         @foreach (var product in Model)
         {
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                       
-                        <div class="card-body">
-                            <h5 class="card-title">@product.Nombre</h5>
-                            <p class="card-text">@product.Descripcion</p>
-                            <p class="card-text">$@product.Precio</p>
-                        </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Nombre</h5>
+                        <p class="card-text">@product.Descripcion</p>
+                        <p class="card-text">$@product.Precio</p>
+                        <button onclick="addToCart(@JsonSerializer.Serialize(product))" class="btn btn-primary">Agregar al carrito</button>
                     </div>
                 </div>
+            </div>
         }
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    function addToCart(product) {
+        $.ajax({
+            type: "POST",
+            url: "/Product/AddToCart",
+            data: product, // Envía el objeto del producto directamente
+            success: function (response) {
+                // Manejar la respuesta según tus necesidades
+                console.log(response);
+            },
+            error: function (error) {
+                // Manejar el error según tus necesidades
+                console.error(error);
+            }
+        });
+    }
+
+</script>
