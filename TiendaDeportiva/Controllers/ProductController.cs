@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Text.Json;
 using TiendaDeportiva.Extensions;
 using TiendaDeportiva.Models;
@@ -47,7 +48,7 @@ namespace TiendaDeportiva.Controllers
                     string content = await response.Content.ReadAsStringAsync();
                     if (content != null)
                     {
-                        products = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(content, options);
+                        products = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(content, options);
                     }
                 }
             }
@@ -72,7 +73,7 @@ namespace TiendaDeportiva.Controllers
                     string content = await response.Content.ReadAsStringAsync();
                     if (content != null)
                     {
-                        products = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(content, options);
+                        products = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(content, options);
                     }
                 }
             }
@@ -82,16 +83,59 @@ namespace TiendaDeportiva.Controllers
             }
             return PartialView(products);
         }
-
-        //       private ProductViewModel
         [HttpPost]
+        public IActionResult AddToCartByCart(string item)
+        {
+            //IActionResult result;
+            if (!string.IsNullOrEmpty(item))
+            {
+                ProductViewModel product = JsonConvert.DeserializeObject<ProductViewModel>(item);
+
+                if (product != null)
+                {
+
+                    List<CartItem> cart = HttpContext.Session.GetObject<List<CartItem>>("Cart");
+                    if (cart == null)
+                    {
+                        cart = new List<CartItem>();
+                    }
+
+                    // Verificar si el producto ya existe en el carrito
+                    CartItem existingItem = cart.FirstOrDefault(item => item.Product.Id == product.Id);
+                    if (existingItem != null)
+                    {
+                        // Si el producto ya existe, actualizar la cantidad
+                        existingItem.Quantity += 1;
+                    }
+                    else
+                    {
+                        // Si el producto no existe, agregarlo al carrito
+                        cart.Add(new CartItem
+                        {
+                            Product = product,
+                            Quantity = 1
+                        });
+                    }
+
+                    // Guardar el carrito en la sesión del usuario
+                    HttpContext.Session.SetObject("Cart", cart);
+                }
+                // Almacenar un mensaje de éxito en TempData
+                TempData["SuccessMessage"] = "El producto se agregó correctamente al carrito.";
+
+                // Redirigir a la página de productos o mostrar un mensaje de éxito
+                //return Ok();//RedirectToAction("Index");
+            }
+            return RedirectToAction("ViewCart");
+
+        }
+
         public IActionResult AddToCart(ProductViewModel product)
         {
+
             if (product != null)
             {
-                // product = JsonSerializer.Deserialize<ProductViewModel>(productJson);
-
-                // Obtener el carrito de la sesión del usuario o crear uno nuevo
+   
                 List<CartItem> cart = HttpContext.Session.GetObject<List<CartItem>>("Cart");
                 if (cart == null)
                 {
@@ -118,12 +162,60 @@ namespace TiendaDeportiva.Controllers
                 // Guardar el carrito en la sesión del usuario
                 HttpContext.Session.SetObject("Cart", cart);
             }
+            // Almacenar un mensaje de éxito en TempData
+            TempData["SuccessMessage"] = "El producto se agregó correctamente al carrito.";
 
             // Redirigir a la página de productos o mostrar un mensaje de éxito
-            return RedirectToAction("Index");
+        return RedirectToAction("Index");
         }
 
+        public IActionResult DeleteToCart(string item)
+        {
 
+            if (!string.IsNullOrEmpty(item))
+            {
+                ProductViewModel product = JsonConvert.DeserializeObject<ProductViewModel>(item);
+
+                // product = JsonSerializer.Deserialize<ProductViewModel>(productJson);
+
+                // Obtener el carrito de la sesión del usuario o crear uno nuevo
+                List<CartItem> cart = HttpContext.Session.GetObject<List<CartItem>>("Cart");
+                if (cart == null)
+                {
+                    cart = new List<CartItem>();
+                }
+
+                // Verificar si el producto ya existe en el carrito
+                CartItem existingItem = cart.FirstOrDefault(item => item.Product.Id == product.Id);
+                if (existingItem != null)
+                {
+                    // Si el producto ya existe, actualizar la cantidad
+                    existingItem.Quantity -= 1;
+                    if(existingItem.Quantity <= 0)
+                    {
+                        cart.Remove(existingItem);
+                    }
+                }
+                else
+                {
+                    // Si el producto no existe, agregarlo al carrito
+                    //cart.Add(new CartItem
+                    //{
+                    //    Product = product,
+                    //    Quantity = 1
+                    //});
+                }
+
+                // Guardar el carrito en la sesión del usuario
+                HttpContext.Session.SetObject("Cart", cart);
+            }
+
+            // Redirigir a la página de productos o mostrar un mensaje de éxito
+            // Almacenar un mensaje de éxito en TempData
+            TempData["SuccessMessage"] = "El producto se eliminó correctamente del carrito.";
+
+            return RedirectToAction("ViewCart");
+        }
         public IActionResult ViewCart()
         {
             List<CartItem> cart = _httpContextAccessor.HttpContext.Session.GetObject<List<CartItem>>("Cart");

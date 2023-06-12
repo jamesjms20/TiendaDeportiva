@@ -28,8 +28,17 @@ namespace TiendaDeportiva.Controllers
         }
 
 
-        public async Task<IActionResult> Index(PersonViewModel person)
+        public async Task<IActionResult> Index()
         {
+           
+            // Obtener el objeto person de la sesión
+            string personData = HttpContext.Session.GetString("PersonData");
+            PersonViewModel person = JsonSerializer.Deserialize<PersonViewModel>(personData, options);
+
+            // Llamar al otro método del controlador pasando el objeto person como parámetro
+           // return RedirectToAction("AnotherMethod", "AnotherController", new { person = person });
+        
+
             ////PersonViewModel person;
             //try
             //{

@@ -1,4 +1,5 @@
-﻿
+﻿@using Newtonsoft.Json;
+
    @model List<CartItem>
 
 <h2>Carrito de compras</h2>
@@ -24,16 +25,30 @@
                     <td>@item.Product.Precio</td>
                     <td>@(item.Quantity * item.Product.Precio)</td>
                     <td>
-                        <a href="#">Eliminar</a>
+                        @using (Html.BeginForm("AddToCartByCart", "Product"))
+                        {
+                            <input type="hidden" name="item" value="@JsonConvert.SerializeObject(item.Product)" />
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        }
+
+                        @using (Html.BeginForm("DeleteToCart", "Product"))
+                        {
+                            <input type="hidden" name="item" value="@JsonConvert.SerializeObject(item.Product)" />
+                            <button type="submit" class="btn btn-primary">Eliminar</button>
+                        }
                     </td>
                 </tr>
+            }
+            @if (TempData.ContainsKey("SuccessMessage"))
+            {
+                <div class="alert alert-info">@TempData["SuccessMessage"]</div>
             }
         </tbody>
     </table>
 
 
     <div>
-        <a href="#">Seguir comprando</a> |
+        <a href="@Url.Action("Index", "Home")">Seguir comprando</a> |
         <a href="#">Pagar</a>
     </div>
 }

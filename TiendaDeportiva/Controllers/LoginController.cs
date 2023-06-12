@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Text.Json;
@@ -34,7 +35,6 @@ namespace TiendaDeportiva.Controllers
         }
         [HttpPost]
 
-
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             PersonViewModel person = new PersonViewModel();
@@ -65,11 +65,16 @@ namespace TiendaDeportiva.Controllers
             if (person.Password is not null)
             {
                 // Guardar la clave en la sesión para indicar que el usuario está autenticado
+             
                 HttpContext.Session.SetString("IsAuthenticated", "true");
-                HttpContext.Session.SetString("typeAuth",person.Type.ToString());
+                HttpContext.Session.SetString("typeAuth", person.Type.ToString());
+
+                // Guardar el objeto person en la sesión
+                HttpContext.Session.SetString("PersonData", JsonSerializer.Serialize(person));
+
 
                 // Redirigir a la página de inicio, o a donde desees
-                return RedirectToAction("Index", "Person",person);
+                return RedirectToAction("Index", "Person");
             }
             else
             {
@@ -77,6 +82,20 @@ namespace TiendaDeportiva.Controllers
                 ModelState.AddModelError(string.Empty, "Credenciales no válidas");
                 return View(model);
             }
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> Logout()
+        {
+            // Cerrar la sesión actual
+           // await HttpContext.SignOutAsync();
+            HttpContext.Session.SetString("IsAuthenticated", "false");
+            HttpContext.Session.SetString("typeAuth","");
+            HttpContext.Session.SetString("PersonData","");
+
+
+            // Redirigir a la página de inicio u otra página deseada
+            return RedirectToAction("Index", "Home");
         }
     }
 }
