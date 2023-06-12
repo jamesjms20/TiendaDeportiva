@@ -1,0 +1,96 @@
+﻿@model IEnumerable<CategoryViewModel>
+
+@{
+    ViewData["Title"] = "category";
+}
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                    <td>
+                        <a href="#" class="category-link" data-id="@item.Id">Editar</a>
+                        <a href="#" class="product-link" data-id="@item.Id">Productos</a>
+                        <a href="#" class="delete-product-link" data-id="@item.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.category-link').click(function (e) {
+            e.preventDefault();
+
+            var categoryId = $(this).data('id');
+
+            $.ajax({
+                url: '@Url.Action("Edit", "Category")',
+                type: 'GET',
+                data: { id: categoryId },
+                success: function (response) {
+                    $('main').html(response);
+                },
+                error: function () {
+                    alert('Ocurrió un error al cargar la vista.');
+                }
+            });
+        });
+
+        $('.product-link').click(function (e) {
+            e.preventDefault();
+
+            var categoryId = $(this).data('id');
+
+            $.ajax({
+                url: '@Url.Action("Index", "Product")',
+                type: 'GET',
+                data: { categoryId: categoryId },
+                success: function (response) {
+                    $('main').html(response);
+                },
+                error: function () {
+                    alert('Ocurrió un error al cargar la vista de productos.');
+                }
+            });
+        });
+
+        $('.delete-product-link').click(function (e) {
+            e.preventDefault();
+
+            var categoryId = $(this).data('id');
+
+            $.ajax({
+                url: '@Url.Action("Delete", "Category")',
+                type: 'DELETE',
+                data: { id: categoryId },
+                success: function (response) {
+                    if (response) {
+                        alert('Categoría eliminada correctamente.');
+                        location.reload(); // Recargar la página
+                    } else {
+                        alert('Ocurrió un error al eliminar la categoría.');
+                    }
+                },
+                error: function () {
+                    alert('Ocurrió un error al eliminar la categoría.');
+                }
+            });
+        });
+    });
+</script>

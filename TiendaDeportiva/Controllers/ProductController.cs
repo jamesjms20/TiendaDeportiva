@@ -33,7 +33,7 @@ namespace TiendaDeportiva.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
             IEnumerable<ProductViewModel> products = new List<ProductViewModel>();
             try
@@ -42,7 +42,7 @@ namespace TiendaDeportiva.Controllers
                 HttpClient httpClient = _httpClientFactory.CreateClient();
                 httpClient.BaseAddress = new Uri(productApiUrl);
 
-                HttpResponseMessage response = await httpClient.GetAsync("api/product/GetProducts");
+                HttpResponseMessage response = await httpClient.GetAsync("api/product/GetProductByCategoria/" + id);
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -56,7 +56,7 @@ namespace TiendaDeportiva.Controllers
             {
                 return NotFound();
             }
-            return View(products);
+            return PartialView(products);
         }
         public async Task<IActionResult> GetByCategory(int id)
         {
@@ -83,6 +83,10 @@ namespace TiendaDeportiva.Controllers
             }
             return PartialView(products);
         }
+
+
+
+
         [HttpPost]
         public IActionResult AddToCartByCart(string item)
         {
@@ -166,7 +170,7 @@ namespace TiendaDeportiva.Controllers
             TempData["SuccessMessage"] = "El producto se agregó correctamente al carrito.";
 
             // Redirigir a la página de productos o mostrar un mensaje de éxito
-        return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
         public IActionResult DeleteToCart(string item)
@@ -222,7 +226,6 @@ namespace TiendaDeportiva.Controllers
 
             return View(cart);
         }
-
 
         public IActionResult Checkout()
         {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using System.Net.Http;
+using System.Net;
+using System.Text;
 using System.Text.Json;
 using TiendaDeportiva.Models;
 
@@ -49,6 +49,68 @@ namespace TiendaDeportiva.Controllers
             return View(category);
         }
 
+        [HttpGet]
+        public async Task<CategoryViewModel> GetById(int id)
+        {
+            CategoryViewModel category = new CategoryViewModel();
+            try
+            {
+                string categoryApiUrl = _configuration["ServicesUrl:Category"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(categoryApiUrl);
+
+                HttpResponseMessage response = await httpClient.GetAsync("api/Category/GetCategory/" + id);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (content != null)
+                    {
+                        category = JsonSerializer.Deserialize<CategoryViewModel>(content, options);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return category;
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                string categoryApiUrl = _configuration["ServicesUrl:Category"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(categoryApiUrl);
+
+                HttpResponseMessage response = await httpClient.DeleteAsync("api/Category/DeleteCategory/" + id);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    bool result;
+                    if (bool.TryParse(content, out result))
+                    {
+                        if (result)
+                        {
+
+                            return Content("<script>window.location.reload();</script>");
+                        }
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return Content("<script>window.location.reload();</script>");
+            }
+            return Content("<script>window.location.reload();</script>");
+        }
+
+
+
+
         public async Task<IActionResult> GetByCategory(int id)
         {
             IEnumerable<ProductViewModel> products = new List<ProductViewModel>();
@@ -75,6 +137,90 @@ namespace TiendaDeportiva.Controllers
             return View(products);
         }
 
+        public async Task<IActionResult> AdminCategory()
+        {
+            IEnumerable<CategoryViewModel> categories = new List<CategoryViewModel>();
+            try
+            {
+                string categoryApiUrl = _configuration["ServicesUrl:Category"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(categoryApiUrl);
 
+                HttpResponseMessage response = await httpClient.GetAsync("api/Category/GetCategories");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (content != null)
+                    {
+                        categories = JsonSerializer.Deserialize<IEnumerable<CategoryViewModel>>(content, options);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+            return View(categories);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            if (id != null)
+            {
+
+                CategoryViewModel category = await GetById(id);
+                return PartialView(category);
+
+            }
+
+            return PartialView();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCategory(int id, CategoryViewModel model)
+        {
+
+            try
+            {
+                model.Id = id;
+                string categoryApiUrl = _configuration["ServicesUrl:Category"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(categoryApiUrl);
+
+                // Serializar el modelo de categoría a JSON
+                var jsonContent = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+
+                // Enviar la solicitud PUT al API para actualizar la categoría
+                HttpResponseMessage response = await httpClient.PutAsync($"api/Category/UpdateCategory/", jsonContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    // La actualización fue exitosa, redireccionar a la acción Details
+                    return RedirectToAction("AdminCategory");
+                }
+                else if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    // La categoría no fue encontrada en el API
+                    return NotFound();
+                }
+                else
+                {
+                    // Ocurrió un error en la solicitud al API
+                    // Puedes manejar el error de acuerdo a tus necesidades
+                    // Por ejemplo, mostrar un mensaje de error al usuario
+                    ModelState.AddModelError("", "Ocurrió un error al actualizar la categoría.");
+                }
+            }
+            catch (Exception)
+            {
+                // Ocurrió una excepción durante la comunicación con el API
+                return NotFound();
+            }
+
+
+            return RedirectToAction("AdminCategory");
+
+        }
     }
 }

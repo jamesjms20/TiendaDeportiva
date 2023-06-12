@@ -29,6 +29,8 @@
             url: "/Product/AddToCart",
             data: product, // Envía el objeto del producto directamente
             success: function (response) {
+                alert('producto agregado al carrito correctamente.');
+
                 // Manejar la respuesta según tus necesidades
                 console.log(response);
             },

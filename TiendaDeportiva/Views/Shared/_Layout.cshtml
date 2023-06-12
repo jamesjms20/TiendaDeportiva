@@ -58,13 +58,20 @@
                     </ul>
                 </div>
             </div>
+
         </nav>
+       
     </header>
+    @if (TempData.ContainsKey("SuccessMessage"))
+    {
+        <div id="successMessage" class="alert alert-info">@TempData["SuccessMessage"]</div>
+    }
 
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+       
        
 
 
@@ -79,5 +86,16 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        // Función para ocultar el mensaje de éxito después de 5 segundos
+        setTimeout(function () {
+            var successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+        }, 5000); // Ocultar después de 5000 milisegundos (5 segundos)
+    </script>
+
 </body>
 </html>

@@ -1,0 +1,26 @@
+﻿@model CategoryViewModel
+
+@{
+    ViewData["Title"] = "Editar Categoría";
+}
+
+<h1>Editar Categoría</h1>
+
+@using (Html.BeginForm("UpdateCategory", "Category", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="Nombre" value="@Model.Nombre">
+    </div>
+
+    <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <textarea class="form-control" id="descripcion" name="Descripcion">@Model.Descripcion</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+}
