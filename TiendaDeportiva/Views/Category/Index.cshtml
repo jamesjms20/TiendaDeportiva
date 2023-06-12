@@ -1,0 +1,44 @@
+﻿@model IEnumerable<CategoryViewModel>
+<div class="container">
+    <h1>Categorias</h1>
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="#" class="category-link" data-id="@category.Id">@category.Nombre</a>
+                        </h5>
+                        <p class="card-text">@category.Descripcion</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.category-link').click(function (e) {
+            e.preventDefault(); // Evitar la acción predeterminada del enlace
+
+            var categoryId = $(this).data('id'); // Obtener el ID de la categoría desde el atributo data-id
+
+            // Realizar una solicitud AJAX al controlador
+            $.ajax({
+                url: '@Url.Action("GetByCategory", "Product")',
+                type: 'GET',
+                data: { id: categoryId },
+                success: function (response) {
+                    // Reemplazar el contenido principal con la nueva vista devuelta por el controlador
+                    $('main').html(response);
+                },
+                error: function () {
+                    alert('Ocurrió un error al cargar la vista.');
+                }
+            });
+        });
+    });
+</script>

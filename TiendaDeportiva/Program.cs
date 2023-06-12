@@ -12,6 +12,10 @@ builder.Services.AddHttpClient("ApiPerson", config =>
 {
     config.BaseAddress = new Uri(builder.Configuration["ServicesUrl:Order"]);
 });
+builder.Services.AddHttpClient("ApiCategory", config =>
+{
+    config.BaseAddress = new Uri(builder.Configuration["ServicesUrl:Category"]);
+});
 
 builder.Configuration.AddJsonFile("appsettings.json");
 

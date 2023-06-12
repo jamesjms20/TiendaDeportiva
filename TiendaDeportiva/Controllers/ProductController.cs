@@ -51,7 +51,31 @@ namespace TiendaDeportiva.Controllers
 				}
 				return View(products);
 			}
+        public async Task<IActionResult> GetByCategory(int id)
+        {
+            IEnumerable<ProductViewModel> products = new List<ProductViewModel>();
+            try
+            {
+                string productApiUrl = _configuration["ServicesUrl:Product"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(productApiUrl);
 
+                HttpResponseMessage response = await httpClient.GetAsync("api/product/GetProductByCategoria/" + id);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (content != null)
+                    {
+                        products = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(content, options);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+            return PartialView(products);
+        }
 
     }
 }
