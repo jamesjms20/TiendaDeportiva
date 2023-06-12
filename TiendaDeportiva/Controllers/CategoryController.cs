@@ -28,9 +28,9 @@ namespace TiendaDeportiva.Controllers
             IEnumerable<CategoryViewModel> category = new List<CategoryViewModel>();
             try
             {
-                string productApiUrl = _configuration["ServicesUrl:Category"];
+                string categoryApiUrl = _configuration["ServicesUrl:Category"];
                 HttpClient httpClient = _httpClientFactory.CreateClient();
-                httpClient.BaseAddress = new Uri(productApiUrl);
+                httpClient.BaseAddress = new Uri(categoryApiUrl);
 
                 HttpResponseMessage response = await httpClient.GetAsync("api/Category/GetCategories");
                 if (response.IsSuccessStatusCode)

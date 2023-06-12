@@ -1,0 +1,28 @@
+﻿@model PersonViewModel
+
+<h2>Datos de la persona</h2>
+
+<div>
+    <dl>
+        <dt>Nombre:</dt>
+        <dd>@Model.Name</dd>
+        <dt>Numero de ID:</dt>
+        <dd>@Model.IdNumber</dd>
+        <dt>Email:</dt>
+        <dd>@Model.Email</dd>
+    </dl>
+    <a asp-controller="Person" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+
+</div>
+
+@if (Model.Type.ToString() == "Administrador")
+{
+    <div class="admin-bar">
+        <h3>Panel de administrcion</h3>
+
+        <a asp-controller="Person" asp-action="Index" class="btn btn-primary">Personas</a>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-primary">Categorías</a>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-primary">Productos</a>
+    </div>
+}
+

@@ -39,16 +39,32 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Iniciar sesión</a>
                         </li>
+                        @if (Context.Session.GetString("IsAuthenticated") == "true")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Usuario</a>
+                            </li>
+                            <li class="nav-item">
+                                <form class="nav-link" asp-controller="Login" asp-action="Logout" method="post">
+                                    <button type="submit" class="btn btn-link text-dark">Cerrar sesión</button>
+                                </form>
+                            </li>
+                        }
+
 
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+       
+
+
     </div>
 
     <footer class="border-top footer text-muted">

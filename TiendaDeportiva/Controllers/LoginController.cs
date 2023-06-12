@@ -40,9 +40,9 @@ namespace TiendaDeportiva.Controllers
             PersonViewModel person = new PersonViewModel();
             try
             {
-                string productApiUrl = _configuration["ServicesUrl:Person"];
+                string PersonApiUrl = _configuration["ServicesUrl:Person"];
                 HttpClient httpClient = _httpClientFactory.CreateClient();
-                httpClient.BaseAddress = new Uri(productApiUrl);
+                httpClient.BaseAddress = new Uri(PersonApiUrl);
 
                 //   https://localhost:7248/api/Person/GetByCredentials
 
@@ -69,7 +69,7 @@ namespace TiendaDeportiva.Controllers
                 HttpContext.Session.SetString("typeAuth",person.Type.ToString());
 
                 // Redirigir a la página de inicio, o a donde desees
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Person",person);
             }
             else
             {
