@@ -6,9 +6,13 @@ Este repositorio cuenta con un api desarrollada en asp.net 7. El front fue desar
 * SQL SERVER
 *  Pasos para inicializar el proyecto
 
-* Restaurar correr el SCRIPT_TIENDA_DEPORTIVA.sql para la creacion de la base de datos 
+* Correr el SCRIPT_TIENDA_DEPORTIVA.sql para la creacion de la base de datos 
 * Cambiar la cadena de conexión de la clase DataAccess.cs ubicada en la carpeta AccesoDatos.DA, 
   que se encuentra en el proyecto 
 * Iniciar la solucion TiendaDeportiva 
-* la solucion contiene todo lo solicitado y solo requiere iniciar la solucion*
+* Elproyecto contiene todo lo solicitado y solo requiere iniciar la solucion
+
+para su mayor facilidad se encuentran en el script 2 usuarios, estos son sus correos y conraseñas por defecto
+Administrador:    johndoe@example.com  password 
+Cliente:        janesmith@example.com password 
 

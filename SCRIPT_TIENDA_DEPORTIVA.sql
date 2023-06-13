@@ -313,3 +313,11 @@ VALUES ('Pelotas de Tenis', 5, 3, 'Paquete de pelotas de tenis');
 INSERT INTO Producto (pNombre, pPrecio, catId, pDescripcion)
 VALUES ('Gorra de Tenis', 20, 3, 'Gorra oficial de un torneo de tenis');
 
+-- Inserts para la tabla Prersonas
+INSERT INTO Person (perName, perIdNumber, perEmail, perPassword, perType)
+VALUES ('John Doe', '123456789', 'johndoe@example.com', 'password', 'Administrador');
+
+INSERT INTO Person (perName, perIdNumber, perEmail, perPassword, perType)
+VALUES ('Jane Smith', '987654321', 'janesmith@example.com', 'password', 'Cliente');
+
+
