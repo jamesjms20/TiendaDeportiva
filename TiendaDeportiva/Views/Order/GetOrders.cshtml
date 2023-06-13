@@ -1,0 +1,55 @@
+﻿@model IEnumerable<OrderViewModel>
+
+@{
+    ViewData["Title"] = "order";
+}
+
+<div class="container">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Date)</th>
+                <th>@Html.DisplayNameFor(model => model.Status)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                    <td>
+                        <a href="#" class="product-link btn-info" data-id="@item.Id">Productos</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.product-link').click(function (e) {
+            e.preventDefault();
+
+            var OrderId = $(this).data('id');
+
+            $.ajax({
+                url: '@Url.Action("GetProductsOrder", "Order")',
+                type: 'GET',
+                data: { id: OrderId },
+                success: function (response) {
+                    $('main').html(response);
+                },
+                error: function () {
+                    alert('Ocurrió un error al cargar la vista de productos.');
+                }
+            });
+        });
+
+    });
+</script>

@@ -31,14 +31,15 @@
                          <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewCart">Carrito</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                    
                       
                         @if (Context.Session.GetString("IsAuthenticated") == "true")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Person" asp-action="Index">Usuario</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="GetOrders">Pedidos</a>
                             </li>
                             <li class="nav-item">
                                 <form class="nav-link" asp-controller="Login" asp-action="Logout" method="post">
@@ -79,7 +80,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - TiendaDeportiva - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - TiendaDeportiva - 
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

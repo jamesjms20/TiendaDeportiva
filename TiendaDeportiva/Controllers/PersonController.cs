@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Text;
 using System.Text.Json;
 using TiendaDeportiva.Models;
 
@@ -30,37 +32,91 @@ namespace TiendaDeportiva.Controllers
 
         public async Task<IActionResult> Index()
         {
-           
             // Obtener el objeto person de la sesión
             string personData = HttpContext.Session.GetString("PersonData");
             PersonViewModel person = JsonSerializer.Deserialize<PersonViewModel>(personData, options);
 
-            // Llamar al otro método del controlador pasando el objeto person como parámetro
-           // return RedirectToAction("AnotherMethod", "AnotherController", new { person = person });
-        
-
-            ////PersonViewModel person;
-            //try
-            //{
-            //    string personApiUrl = _configuration["ServicesUrl:Person"];
-            //    HttpClient httpClient = _httpClientFactory.CreateClient();
-            //    httpClient.BaseAddress = new Uri(personApiUrl);
-
-            //    HttpResponseMessage response = await httpClient.GetAsync("api/person/GetPersons");
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        string content = await response.Content.ReadAsStringAsync();
-            //        if (content != null)
-            //        {
-            //            person = JsonSerializer.Deserialize<IEnumerable<PersonViewModel>>(content, options);
-            //        }
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //    return NotFound();
-            //}
             return View(person);
         }
+        [HttpGet]
+        public async Task<PersonViewModel> GetById(int id)
+        {
+            PersonViewModel person = new PersonViewModel();
+
+            try
+            {
+                string personApiUrl = _configuration["ServicesUrl:Person"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(personApiUrl);
+
+                HttpResponseMessage response = await httpClient.GetAsync("api/Person/Get/" + id);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (content != null)
+                    {
+                        person = JsonSerializer.Deserialize<PersonViewModel>(content, options);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return person;
+        }
+
+
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            if (id != null)
+            {
+
+                PersonViewModel category = await GetById(id);
+
+                return PartialView(category);
+
+            }
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePerson( PersonViewModel model)
+        {
+            try
+            {
+                string personApiUrl = _configuration["ServicesUrl:Person"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(personApiUrl);
+
+                var jsonContent = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await httpClient.PutAsync($"api/Product/UpdateProduct/", jsonContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                else if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+         
+                    ModelState.AddModelError("", "Ocurrió un error al actualizar la persona.");
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+
+
+            return RedirectToAction("Index");
+
+        }
+
     }
 }

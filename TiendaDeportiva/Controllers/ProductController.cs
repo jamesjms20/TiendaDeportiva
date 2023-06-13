@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
+using System.Text;
 using System.Text.Json;
 using TiendaDeportiva.Extensions;
 using TiendaDeportiva.Models;
@@ -51,6 +53,9 @@ namespace TiendaDeportiva.Controllers
                         products = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(content, options);
                     }
                 }
+                //if (products.Count() == 0) {
+                //    return PartialView(id);
+                //}
             }
             catch (Exception)
             {
@@ -83,6 +88,161 @@ namespace TiendaDeportiva.Controllers
             }
             return PartialView(products);
         }
+        [HttpGet]
+        public async Task<ProductViewModel> GetById(int id)
+        {
+            ProductViewModel product = new ProductViewModel();
+            try
+            {
+                string productApiUrl = _configuration["ServicesUrl:Product"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(productApiUrl);
+
+                HttpResponseMessage response = await httpClient.GetAsync("api/Product/GetProduct/" + id);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (content != null)
+                    {
+                        product = System.Text.Json.JsonSerializer.Deserialize<ProductViewModel>(content, options);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return product;
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            if (id != null)
+            {
+
+                ProductViewModel product = await GetById(id);
+                return PartialView(product);
+
+            }
+
+            return PartialView();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProduct(int id, ProductViewModel model)
+        {
+
+            try
+            {
+                model.Id = id;
+                string productApiUrl = _configuration["ServicesUrl:Product"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(productApiUrl);
+
+                var jsonContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await httpClient.PutAsync($"api/Product/UpdateProduct/", jsonContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("adminCategory","Category");
+                }
+                else if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                   
+                    ModelState.AddModelError("", "Ocurrió un error al actualizar el producto.");
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+
+
+            return RedirectToAction("adminCategory", "Category");
+
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                string productApiUrl = _configuration["ServicesUrl:Product"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(productApiUrl);
+
+                HttpResponseMessage response = await httpClient.DeleteAsync("api/Product/DeleteProduct/" + id);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    bool result;
+                    if (bool.TryParse(content, out result))
+                    {
+                        if (result)
+                        {
+
+                            return Content("<script>window.location.reload();</script>");
+                        }
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return Content("<script>window.location.reload();</script>");
+            }
+            return Content("<script>window.location.reload();</script>");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProduct(string nombre, int catId, string descripcion,int precio)
+        {
+            ProductViewModel model = new ProductViewModel();
+            try
+            {
+                model.Id = 0;
+                model.Nombre = nombre;
+                model.CatId = catId;
+                model.Precio = precio;
+                model.Descripcion = descripcion;
+
+                string productApiUrl = _configuration["ServicesUrl:Product"];
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.BaseAddress = new Uri(productApiUrl);
+                var jsonContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await httpClient.PostAsync($"api/Product/SaveProduct/", jsonContent);
+                if (response.IsSuccessStatusCode)
+                { 
+                    return RedirectToAction("AdminCategory");
+                }
+                else if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ocurrió un error alagregar el producto");
+                }
+            }
+            catch (Exception)
+            {
+                // Ocurrió una excepción durante la comunicación con el API
+                return NotFound();
+            }
+
+
+            return RedirectToAction("AdminCategory");
+
+
+        }
+
+
 
 
 

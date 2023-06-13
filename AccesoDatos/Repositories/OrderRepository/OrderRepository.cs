@@ -192,11 +192,20 @@ namespace AccesoDatos.Repositories.OrderRepository
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();
-                sqlCommand.Parameters.Add("orDate", SqlDbType.DateTime).Value = order.Date;
-                sqlCommand.Parameters.Add("orStatus", SqlDbType.VarChar).Value = order.Status;
-                sqlCommand.Parameters.Add("perId", SqlDbType.Int).Value = order.perId;
+                sqlCommand.Parameters.Add("@orDate", SqlDbType.DateTime).Value = order.Date;
+                sqlCommand.Parameters.Add("@orStatus", SqlDbType.VarChar).Value = order.Status;
+                sqlCommand.Parameters.Add("@perId", SqlDbType.Int).Value = order.perId;
+                SqlParameter outputParameter = new SqlParameter("@newId", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                sqlCommand.Parameters.Add(outputParameter);
+
                 sqlCommand.ExecuteNonQuery();
                 sqlTransaction.Commit();
+
+                int newId = Convert.ToInt32(outputParameter.Value);
+                order.Id = newId; 
 
             }
             catch (Exception ex)
@@ -205,7 +214,7 @@ namespace AccesoDatos.Repositories.OrderRepository
                 {
                     sqlTransaction.Rollback();
                 }
-                throw new Exception($"A ocurrido un error al intentar guardar el pedido: {ex.Message}");
+                throw new Exception($"Ha ocurrido un error al intentar guardar el pedido: {ex.Message}");
 
             }
             finally
@@ -214,10 +223,19 @@ namespace AccesoDatos.Repositories.OrderRepository
                 sqlConnection.Close();
                 sqlConnection.Dispose();
             }
+
+            foreach (var item in order.Productos)
+            {
+                AddProduct(order.Id, item.Id);
+
+            }
+
             return order;
         }
 
-        public Order Update(Order order)
+        
+
+    public Order Update(Order order)
         {
 
             SqlConnection sqlConnection = DataAccess.GetInstancia().CreateConnection();

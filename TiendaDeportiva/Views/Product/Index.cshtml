@@ -1,43 +1,123 @@
 ﻿@model IEnumerable<ProductViewModel>
 
 @{
-	ViewData["Title"] = "product";
+    ViewData["Title"] = "product";
 }
 
 <div class="container">
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th> @Html.DisplayNameFor(model => model.Nombre)</th>
-				<th> @Html.DisplayNameFor(model => model.Descripcion)</th>
-				<th> @Html.DisplayNameFor(model => model.Precio)</th>
-				<th> Acciones</th>
+    <form id="add-product-form">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" name="descripcion" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar</button>
+    </form>
 
-			</tr>
-
-		</thead>
-		<tbody>
-			@foreach (var item in Model)
-			{
-				<tr>
-					<td>   @Html.DisplayFor(modelItem => item.Nombre)</td>
-					<td>   @Html.DisplayFor(modelItem => item.Descripcion)</td>
-					<td>   @Html.DisplayFor(modelItem => item.Precio)</td>
-					<td>
-						<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-						<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a>
-						<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
-					</td>
-
-				</tr>
-
-
-
-
-
-			}
-
-		</tbody>
-	</table>
-
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                <th>@Html.DisplayNameFor(model => model.Precio)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="product-table-body">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Precio)</td>
+                    <td>
+                        <a href="#" class="product-link btn btn-warning" data-id="@item.Id" data-catId="@item.CatId">Editar</a>
+                        <a href="#" class="delete-product-link btn btn-danger" data-id="@item.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.product-link').click(function (e) {
+            e.preventDefault();
+
+            var productId = $(this).data('id');
+            var catId = $(this).data('catId');
+
+            $.ajax({
+                url: '@Url.Action("Edit", "Product")',
+                type: 'GET',
+                data: { id: productId },
+                success: function (response) {
+                    $('main').html(response);
+                },
+                error: function () {
+                    alert('Ocurrió un error al cargar la vista.');
+                }
+            });
+        });
+
+        $('#add-product-form').submit(function (e) {
+            e.preventDefault();
+
+            var nombre = $('#nombre').val();
+            var descripcion = $('#descripcion').val();
+            var precio = $('#precio').val();
+            var catId = $('#product-table-body tr:first-child .product-link').data('catId'); // Obtener el catId del primer item de la lista
+
+            $.ajax({
+                url: '@Url.Action("AddProduct", "Product")',
+                type: 'POST',
+                data: { nombre: nombre, descripcion: descripcion, precio: precio, catId: catId },
+                success: function (response) {
+                    if (response) {
+                        alert('Producto agregado correctamente.');
+                        loadProductTable();
+                    } else {
+                        alert('Ocurrió un error al agregar el producto.');
+                    }
+                },
+                error: function () {
+                    alert('Ocurrió un error al agregar el producto.');
+                }
+            });
+        });
+
+        $('.delete-product-link').click(function (e) {
+            e.preventDefault();
+
+            var productId = $(this).data('id');
+
+            $.ajax({
+                url: '@Url.Action("Delete", "Product")',
+                type: 'DELETE',
+                data: { id: productId },
+                success: function (response) {
+                    if (response) {
+                        alert('Producto eliminado correctamente.');
+                        location.reload();
+                    } else {
+                        alert('Ocurrió un error al eliminar el producto.');
+                    }
+                },
+                error: function () {
+                    alert('Ocurrió un error al eliminar el producto.');
+                }
+            });
+        });
+    });
+</script>

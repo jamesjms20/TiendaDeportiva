@@ -54,6 +54,7 @@ namespace TiendaDeportiva.Controllers
         public async Task<CategoryViewModel> GetById(int id)
         {
             CategoryViewModel category = new CategoryViewModel();
+
             try
             {
                 string categoryApiUrl = _configuration["ServicesUrl:Category"];
@@ -109,7 +110,7 @@ namespace TiendaDeportiva.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Ocurrió un error al actualizar la categoría.");
+                    ModelState.AddModelError("", "Ocurrió un error al agregar la categoría.");
                 }
             }
             catch (Exception)
@@ -270,5 +271,6 @@ namespace TiendaDeportiva.Controllers
             return RedirectToAction("AdminCategory");
 
         }
+   
     }
 }

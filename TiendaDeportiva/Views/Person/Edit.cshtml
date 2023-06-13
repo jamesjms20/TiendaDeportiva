@@ -1,0 +1,32 @@
+﻿@model PersonViewModel
+
+@{
+    ViewData["Title"] = "Editar Persona";
+}
+<div class="container">
+<h2>Editar Persona</h2>
+
+@using (Html.BeginForm("UpdatePerson", "Person", FormMethod.Post))
+{
+    <button type="submit" class="btn btn-primary">Guardar</button>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Type)
+        @Html.HiddenFor(model => model.Id)
+
+
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="Nombre" value="@Model.Name">
+        </div>
+
+        <div class="form-group">
+            <label for="idNumber">Numero de identificacion:</label>
+            <textarea class="form-control" id="idNumber" name="IdNumber">@Model.IdNumber</textarea>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <textarea class="form-control" id="email" name="Email">@Model.Email</textarea>
+        </div>
+        }
+
+</div>
