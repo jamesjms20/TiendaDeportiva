@@ -16,11 +16,6 @@ namespace TiendaDeportiva.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-
-        //public HomeController(IHttpClientFactory httpClientFactory)
-        //{
-        //    _httpClientFactory = httpClientFactory;
-        //}
         private readonly IConfiguration _configuration;
 
 
@@ -146,7 +141,7 @@ namespace TiendaDeportiva.Controllers
                 HttpResponseMessage response = await httpClient.PutAsync($"api/Product/UpdateProduct/", jsonContent);
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("adminCategory","Category");
+                    return RedirectToAction("adminCategory", "Category");
                 }
                 else if (response.StatusCode == HttpStatusCode.NotFound)
                 {
@@ -154,7 +149,7 @@ namespace TiendaDeportiva.Controllers
                 }
                 else
                 {
-                   
+
                     ModelState.AddModelError("", "Ocurrió un error al actualizar el producto.");
                 }
             }
@@ -201,7 +196,7 @@ namespace TiendaDeportiva.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct(string nombre, int catId, string descripcion,int precio)
+        public async Task<IActionResult> AddProduct(string nombre, int catId, string descripcion, int precio)
         {
             ProductViewModel model = new ProductViewModel();
             try
@@ -218,7 +213,7 @@ namespace TiendaDeportiva.Controllers
                 var jsonContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await httpClient.PostAsync($"api/Product/SaveProduct/", jsonContent);
                 if (response.IsSuccessStatusCode)
-                { 
+                {
                     return RedirectToAction("AdminCategory");
                 }
                 else if (response.StatusCode == HttpStatusCode.NotFound)
@@ -299,7 +294,7 @@ namespace TiendaDeportiva.Controllers
 
             if (product != null)
             {
-   
+
                 List<CartItem> cart = HttpContext.Session.GetObject<List<CartItem>>("Cart");
                 if (cart == null)
                 {
@@ -355,7 +350,7 @@ namespace TiendaDeportiva.Controllers
                 {
                     // Si el producto ya existe, actualizar la cantidad
                     existingItem.Quantity -= 1;
-                    if(existingItem.Quantity <= 0)
+                    if (existingItem.Quantity <= 0)
                     {
                         cart.Remove(existingItem);
                     }
@@ -389,14 +384,9 @@ namespace TiendaDeportiva.Controllers
 
         public IActionResult Checkout()
         {
-            // Procesar el carrito y realizar la compra
-            // ...
-
-            // Vaciar el carrito
             HttpContext.Session.Remove("Cart");
 
-            // Redirigir a la página de confirmación o mostrar un mensaje de éxito
-            return RedirectToAction("Confirmation");
+            return RedirectToAction("Index");
         }
 
 

@@ -83,7 +83,7 @@ namespace TiendaDeportiva.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePerson( PersonViewModel model)
+        public async Task<IActionResult> UpdatePerson(PersonViewModel model)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace TiendaDeportiva.Controllers
                 }
                 else
                 {
-         
+
                     ModelState.AddModelError("", "Ocurrió un error al actualizar la persona.");
                 }
             }

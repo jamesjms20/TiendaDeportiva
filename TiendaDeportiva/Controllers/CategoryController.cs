@@ -93,10 +93,8 @@ namespace TiendaDeportiva.Controllers
                 HttpClient httpClient = _httpClientFactory.CreateClient();
                 httpClient.BaseAddress = new Uri(categoryApiUrl);
 
-                // Serializar el modelo de categoría a JSON
                 var jsonContent = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
 
-                // Enviar la solicitud PUT al API para actualizar la categoría
                 HttpResponseMessage response = await httpClient.PostAsync($"api/Category/SaveCategory/", jsonContent);
                 if (response.IsSuccessStatusCode)
                 {
@@ -105,7 +103,6 @@ namespace TiendaDeportiva.Controllers
                 }
                 else if (response.StatusCode == HttpStatusCode.NotFound)
                 {
-                    // La categoría no fue encontrada en el API
                     return NotFound();
                 }
                 else
@@ -115,7 +112,6 @@ namespace TiendaDeportiva.Controllers
             }
             catch (Exception)
             {
-                // Ocurrió una excepción durante la comunicación con el API
                 return NotFound();
             }
 
@@ -238,32 +234,24 @@ namespace TiendaDeportiva.Controllers
                 HttpClient httpClient = _httpClientFactory.CreateClient();
                 httpClient.BaseAddress = new Uri(categoryApiUrl);
 
-                // Serializar el modelo de categoría a JSON
                 var jsonContent = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
 
-                // Enviar la solicitud PUT al API para actualizar la categoría
                 HttpResponseMessage response = await httpClient.PutAsync($"api/Category/UpdateCategory/", jsonContent);
                 if (response.IsSuccessStatusCode)
                 {
-                    // La actualización fue exitosa, redireccionar a la acción Details
                     return RedirectToAction("AdminCategory");
                 }
                 else if (response.StatusCode == HttpStatusCode.NotFound)
                 {
-                    // La categoría no fue encontrada en el API
                     return NotFound();
                 }
                 else
                 {
-                    // Ocurrió un error en la solicitud al API
-                    // Puedes manejar el error de acuerdo a tus necesidades
-                    // Por ejemplo, mostrar un mensaje de error al usuario
                     ModelState.AddModelError("", "Ocurrió un error al actualizar la categoría.");
                 }
             }
             catch (Exception)
             {
-                // Ocurrió una excepción durante la comunicación con el API
                 return NotFound();
             }
 

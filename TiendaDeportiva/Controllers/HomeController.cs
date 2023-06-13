@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Net.Http.Headers;
-using System.Net.Http;
-using TiendaDeportiva.Models;
-using Microsoft.Extensions.Options;
 using System.Text.Json;
+using TiendaDeportiva.Models;
 
 namespace TiendaDeportiva.Controllers
 {
@@ -15,10 +12,7 @@ namespace TiendaDeportiva.Controllers
         private readonly JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
         private readonly IHttpClientFactory _httpClientFactory;
 
-        //public HomeController(IHttpClientFactory httpClientFactory)
-        //{
-        //    _httpClientFactory = httpClientFactory;
-        //}
+
         private readonly IConfiguration _configuration;
 
         public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
