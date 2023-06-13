@@ -145,10 +145,9 @@ CREATE PROCEDURE sp_updatePerson
   @perName VARCHAR(100),
   @perIdNumber VARCHAR(100),
   @perEmail VARCHAR(100),
-  @perPassword VARCHAR(100),
   @perType VARCHAR(100)
   AS
-  UPDATE Person set perName=@perName,perIdNumber=@perIdNumber,perEmail=@perEmail,perPassword=@perPassword,perType=@perType
+  UPDATE Person set perName=@perName,perIdNumber=@perIdNumber,perEmail=@perEmail,perType=@perType
   WHERE perId = @perId
 GO
 

@@ -6,26 +6,28 @@
 <div class="container">
 <h2>Editar Persona</h2>
 
-@using (Html.BeginForm("UpdatePerson", "Person", FormMethod.Post))
-{
+    @using (Html.BeginForm("UpdatePerson", "Person", FormMethod.Post))
+    {
     <button type="submit" class="btn btn-primary">Guardar</button>
         @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.Type)
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Type)
+
 
 
         <div class="form-group">
             <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" name="Nombre" value="@Model.Name">
+            <input type="text" class="form-control" id="nombre" name="name" value="@Model.Name">
         </div>
 
         <div class="form-group">
             <label for="idNumber">Numero de identificacion:</label>
-            <textarea class="form-control" id="idNumber" name="IdNumber">@Model.IdNumber</textarea>
+                <textarea class="form-control" id="idNumber" name="idNumber">@Model.IdNumber</textarea>
+
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <textarea class="form-control" id="email" name="Email">@Model.Email</textarea>
+            <textarea class="form-control" id="email" name="email">@Model.Email</textarea>
         </div>
         }
 

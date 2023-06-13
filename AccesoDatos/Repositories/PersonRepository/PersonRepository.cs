@@ -306,7 +306,6 @@ namespace AccesoDatos.Repositories.PersonRepository
                 sqlCommand.Parameters.Add("perName", SqlDbType.VarChar).Value = person.Name;
                 sqlCommand.Parameters.Add("perIdNumber", SqlDbType.VarChar).Value = person.IdNumber;
                 sqlCommand.Parameters.Add("perEmail", SqlDbType.VarChar).Value = person.Email;
-                sqlCommand.Parameters.Add("perPassword", SqlDbType.VarChar).Value = person.Password;
                 sqlCommand.Parameters.Add("perType", SqlDbType.VarChar).Value = person.Type.ToString();
                 sqlCommand.ExecuteNonQuery();
                 sqlTransaction.Commit();

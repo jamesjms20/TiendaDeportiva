@@ -35,8 +35,9 @@ namespace TiendaDeportiva.Controllers
             // Obtener el objeto person de la sesión
             string personData = HttpContext.Session.GetString("PersonData");
             PersonViewModel person = JsonSerializer.Deserialize<PersonViewModel>(personData, options);
-
-            return View(person);
+            PersonViewModel personbd = await GetById(person.Id);
+           
+            return View(personbd);
         }
         [HttpGet]
         public async Task<PersonViewModel> GetById(int id)
@@ -73,9 +74,9 @@ namespace TiendaDeportiva.Controllers
             if (id != null)
             {
 
-                PersonViewModel category = await GetById(id);
+                PersonViewModel person = await GetById(id);
 
-                return PartialView(category);
+                return PartialView(person);
 
             }
 
@@ -83,24 +84,25 @@ namespace TiendaDeportiva.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePerson(PersonViewModel model)
+        public async Task<IActionResult> UpdatePerson( PersonViewModel model)
         {
             try
             {
+                model.Password = "";
+                
                 string personApiUrl = _configuration["ServicesUrl:Person"];
                 HttpClient httpClient = _httpClientFactory.CreateClient();
                 httpClient.BaseAddress = new Uri(personApiUrl);
 
                 var jsonContent = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await httpClient.PutAsync($"api/Product/UpdateProduct/", jsonContent);
+                HttpResponseMessage response = await httpClient.PutAsync($"api/Person/Update/", jsonContent);
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
                 else if (response.StatusCode == HttpStatusCode.NotFound)
                 {
-                    return NotFound();
+                    return RedirectToAction("Index");
                 }
                 else
                 {
